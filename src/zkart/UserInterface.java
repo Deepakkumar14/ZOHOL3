@@ -85,7 +85,7 @@ public class UserInterface {
                     }
                         System.out.println("Enter password again to Confirm");
                         String confirm=input.nextLine();
-                        while(confirm!=password) {
+                        while(!Objects.equals(confirm, password)) {
                             System.out.println("Enter password again");
                             confirm = input.nextLine();
                         }
@@ -99,7 +99,7 @@ public class UserInterface {
                     break;
                 }
             }
-            case 4:
+            case 3:
                 break;
 
             default: {
@@ -161,7 +161,7 @@ public class UserInterface {
                 LinkedHashMap<String,HashMap<String,ArrayList<Products>>> map=logic.getProductmap();
                 int i=1;
                for(Map.Entry<String,HashMap<String,ArrayList<Products>>> map1:map.entrySet())
-                   System.out.println(i++ +" "+map1.getKey());
+                   System.out.println(map1.getKey());
                 System.out.println("Choose a category ");
                 String category=input.nextLine();
                 HashMap<String,ArrayList<Products>> brands=map.get(category);
@@ -219,7 +219,7 @@ public class UserInterface {
                 }
                 System.out.println("Enter password again to Confirm");
                 String confirm=input.nextLine();
-                while(confirm!=newPassword) {
+                while(!Objects.equals(confirm, newPassword)) {
                     System.out.println("Enter password again");
                     confirm = input.nextLine();
                 }
