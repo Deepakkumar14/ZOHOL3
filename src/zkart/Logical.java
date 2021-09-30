@@ -31,7 +31,7 @@ public class Logical {
     public String adminChecker(String mail, String password) {
         if (mail != null && password != null) {
             Admin admin = Cache.INSTANCE.getAdmin();
-            if (admin != null) {
+            if (admin != null && admin.getMail().equals(mail)) {
                 String password1 = admin.getPassword();
                 String decrypt = decryption(password1);
                 if (decrypt.equals(password)) {
@@ -118,7 +118,6 @@ public class Logical {
             File file = new File("/home/inc4/zusers_db.txt");
             fr = new FileWriter(file, true);
             String lines = cus.getMail() + " " + cus.getPassword() + " " + cus.getName() + " " + cus.getMobile();
-            System.out.println("weded");
             fr.write(lines);
             fr.write("\n");
         } catch (IOException ex) {
@@ -142,14 +141,23 @@ public class Logical {
         return false;
     }
 
-    public void adminPasswordChanger(String password) {
-        String encrypt = encryption(password);
-        Admin admin = Cache.INSTANCE.getAdmin();
-        admin.setPassword(encrypt);
-        List<String> password1 = admin.getPasswords();
-        if (password1 == null)
-            password1 = new ArrayList<>();
-        password1.add(encrypt);
+    public String adminPasswordChanger(String password,String mail) {
+        if (password != null) {
+            String encrypt = encryption(password);
+            Admin cus = Cache.INSTANCE.getAdmin();
+            ArrayList<String> list = cus.getPasswords();
+            if (list == null) {
+                list = new ArrayList<>();
+            } else {
+                if (list.contains(encrypt))
+                    return "You can't use the last three old passwords";
+            }
+            list.add(cus.getPassword());
+            cus.setPasswords(list);
+            cus.setPassword(encrypt);
+            return "Password changed Successfully";
+        }
+        return "Password was not changed try again";
     }
 
     public LinkedHashMap<String, HashMap<String, ArrayList<Products>>> getProductmap() {
@@ -205,6 +213,7 @@ public class Logical {
                    return "You can't use the last three old passwords";
             }
             list.add(person.getPassword());
+            person.setPasswords(list);
             person.setPassword(encrypt);
             return "Password changed Successfully";
         }
@@ -280,5 +289,51 @@ public class Logical {
             }
         }
         return "Stock Not updated";
+    }
+
+    public ArrayList<Products> getStock() {
+        ArrayList<Products> stock=new ArrayList<>();
+        LinkedHashMap<String, HashMap<String, ArrayList<Products>>> map = getProductmap();
+        for (Map.Entry<String, HashMap<String, ArrayList<Products>>> map1 : map.entrySet()) {
+            HashMap<String, ArrayList<Products>> brands = map1.getValue();
+            for (Map.Entry<String, ArrayList<Products>> brand : brands.entrySet()) {
+                ArrayList<Products> models = brand.getValue();
+                for (Products model : models) {
+                    if (model.getStock() <= 10) {
+                        stock.add(model);
+                    }
+                }
+            }
+        }
+        if(stock.size()>=1)
+           return stock;
+        else
+            return null;
+    }
+
+
+
+    public String getCouponCode(){
+        String code="ABCDEFGHIJKLMNOPQRSTUVWXYZ"+"0123456789"+"abcdefghijklmnopqrstuvwxyz";
+        String coupon="";
+        for(int i=0;i<6;i++){
+            int index=(int)(code.length()*Math.random());
+            coupon+=code.charAt(index);
+        }
+        return coupon;
+    }
+
+    public int getDiscount(){
+        int min=20;
+        int max=30;
+        return (int)(Math.random()*(max-min+1)+min);
+
+    }
+
+    public static void main(String[] args) {
+        String coupon=new Logical().getCouponCode();
+        System.out.println(coupon);
+        int discount=new Logical().getDiscount();
+        System.out.println(discount);
     }
 }

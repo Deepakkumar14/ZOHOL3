@@ -44,21 +44,24 @@ public enum Cache {
     }
 
     public Cart checkout(String mail) {
-       ArrayList<Cart> invoice=invoiceList.getOrDefault(mail,new ArrayList<>());
-       Cart cus=new Cart();
-       cus.setInvoiceNumber(invoiceNo++);
-       ArrayList<Products> list=new ArrayList<>();
-       double totalAmount=0;
-       for(Products pro:cart) {
-           list.add(pro);
-           totalAmount+=pro.getPrice();
-       }
-        cus.setTotalAmount(totalAmount);
-       cus.setInvoiceList(list);
-       invoice.add(cus);
-       invoiceList.put(mail,invoice);
-       cart.clear();
-        return cus;
+        if (cart.size() >= 1) {
+            ArrayList<Cart> invoice = invoiceList.getOrDefault(mail, new ArrayList<>());
+            Cart cus = new Cart();
+            cus.setInvoiceNumber(invoiceNo++);
+            ArrayList<Products> list = new ArrayList<>();
+            double totalAmount = 0;
+            for (Products pro : cart) {
+                list.add(pro);
+                totalAmount += pro.getPrice();
+            }
+            cus.setTotalAmount(totalAmount);
+            cus.setInvoiceList(list);
+            invoice.add(cus);
+            invoiceList.put(mail, invoice);
+            cart.clear();
+            return cus;
+        }
+        return null;
     }
 
     public ArrayList<Cart> getInvoiceList(String mail) {
