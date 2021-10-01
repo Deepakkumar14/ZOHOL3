@@ -50,11 +50,7 @@ public class Match {
     @Override
     public String toString() {
         return "Match{" +
-                "result='" + result + '\'' +
                 ", opponentId=" + opponentId +
-                ", matchId=" + matchId +
-                ", point=" + point +
-                ", opponentPoint=" + opponentPoint +
                 '}';
     }
 }

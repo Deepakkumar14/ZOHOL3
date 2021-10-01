@@ -54,8 +54,6 @@ public class Player {
         return "Player{" +
                 "playerId=" + playerId +
                 ", playerName='" + playerName + '\'' +
-                ", bonus=" + bonus +
-                ", totalPoints=" + totalPoints +
                 ", matches=" + matches +
                 '}';
     }

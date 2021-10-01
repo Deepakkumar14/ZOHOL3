@@ -23,7 +23,7 @@ public class TournamentField {
                     for (int j = 1; j <= rounds; j++) {
                         System.out.println("Chess Tournament Round " + j);
 
-                        List<Map.Entry<Integer, Player>> list = logic.Scheduler(i);
+                        List<Map.Entry<Integer, Player>> list = logic.Scheduler(j);
                         String schedule = logic.schedulerString(list);
                         System.out.println(schedule);
 
