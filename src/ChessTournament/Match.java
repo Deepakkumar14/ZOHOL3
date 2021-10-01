@@ -46,4 +46,15 @@ public class Match {
     public void setOpponentPoint(float opponentPoint) {
         this.opponentPoint = opponentPoint;
     }
+
+    @Override
+    public String toString() {
+        return "Match{" +
+                "result='" + result + '\'' +
+                ", opponentId=" + opponentId +
+                ", matchId=" + matchId +
+                ", point=" + point +
+                ", opponentPoint=" + opponentPoint +
+                '}';
+    }
 }

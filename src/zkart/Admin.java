@@ -1,6 +1,6 @@
 package zkart;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Admin {
     private String mail;
@@ -21,14 +21,14 @@ public class Admin {
         this.password = password;
     }
 
-    public List<String> getPasswords() {
+    public ArrayList<String> getPasswords() {
         return passwords;
     }
 
-    public void setPasswords(List<String> passwords) {
+    public void setPasswords(ArrayList<String> passwords) {
         this.passwords = passwords;
     }
 
     private String password;
-    private List<String> passwords;
+    private ArrayList<String> passwords;
 }

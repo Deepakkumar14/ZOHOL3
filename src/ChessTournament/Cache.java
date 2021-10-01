@@ -16,7 +16,9 @@ public enum Cache {
         tournamentMap.put(id,player);
     }
 
-
+    public Player getPlayer(int id ) {
+        return tournamentMap.get(id);
+    }
 
 
 }
