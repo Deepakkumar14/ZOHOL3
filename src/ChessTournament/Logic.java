@@ -20,19 +20,23 @@ public class Logic {
         list=sortList(list);
         if(match>1){
         ArrayList<Integer> temp=new ArrayList<>();
-            System.out.println(temp);
+
         LinkedHashMap<Integer, Player> finalList=new LinkedHashMap<>();
         for(int i=0;i< list.size();i++){
             int playerId=list.get(i).getKey();
-            if(!(temp.contains(playerId) )) {
+            if(!(temp.contains(playerId))) {
+               // System.out.println("Player1  "+playerId);
                 ArrayList<Match> opponent = list.get(i).getValue().getMatches();
+               // System.out.println(opponent);
                 ArrayList<Integer> opponentId = new ArrayList<>();
-                System.out.println(opponentId);
+
                 for (Match matches : opponent)
                     opponentId.add(matches.getOpponentId());
-                for (int j = i + 1; j < list.size(); j++) {
+               // System.out.println(opponentId);
+                for (int j = i+1; j < list.size(); j++) {
                     int playerId2 = list.get(j).getKey();
-                    if (!(opponentId.contains(playerId) && temp.contains(playerId2))) {
+                 //   System.out.println("Player2  "+playerId2);
+                    if (!(opponentId.contains(playerId2) || temp.contains(playerId2))) {
                         finalList.put(playerId, list.get(i).getValue());
                         finalList.put(playerId2, list.get(j).getValue());
                         temp.add(playerId);
@@ -43,7 +47,6 @@ public class Logic {
             }
             }
             list=new ArrayList(finalList.entrySet());
-            System.out.println(list);
         }
         return list;
     }
@@ -56,11 +59,11 @@ public class Logic {
         for (int i = 0; i < list.size() - 1; i++) {
             Player player = list.get(i++).getValue();
             Player player1 = list.get(i).getValue();
-            int decider = (int) (Math.random() * (3 - 1 + 1) + 2);
-            if (decider == 3) {
+            int decider = (int) Math.floor(Math.random() * 3);
+            if (decider == 2) {
                 setResultWon(player, matchId, player1);
                 setResultLose(player1, matchId, player);
-            } else if (decider == 2) {
+            } else if (decider == 1) {
                 setResultWon(player1, matchId, player);
                  setResultLose(player, matchId, player1);
             } else {
@@ -127,6 +130,7 @@ public class Logic {
             matches = new ArrayList<>();
         }
         player.setTotalPoints(player.getTotalPoints() + 1);
+        player.setBonus(player.getBonus()+1);
         match.setMatchId(matchId);
         match.setResult("Bye");
         match.setOpponentId(0);
@@ -218,7 +222,10 @@ public class Logic {
             Player player1 = list.get(j).getValue();
             int rankNumber=j+1;
             output +="Rank   "+rankNumber +"  "+player1.getPlayerName() +"   ("+player1.getTotalPoints() +")"+ "\n";
+
         }
         return output;
     }
+
+
 }
